@@ -1,20 +1,18 @@
 
+/* eslint-disable react/prop-types */
 
 import { useState } from "react";
 import RadioButton from "./RadioButtons";
 import Checkbox from "./Checkbox";
 
 
-function Form() {
+function Form({getDataFromForm}) {
     const initialFormState = {
         color: "",
         review: "",
         username: "",
         email: "",
-        swimming: false,
-        bathing: false,
-        chatting: false,
-        noTime: false
+        timeSpent: []
     }
     const[form, setForm] = useState(initialFormState)
 
@@ -36,6 +34,7 @@ function Form() {
     function handleSubmit(event) {
         event.preventDefault()
         console.log("Form submitted: ", { form })
+        getDataFromForm(form)
         setForm(initialFormState)
   }
 

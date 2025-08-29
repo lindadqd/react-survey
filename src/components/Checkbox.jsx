@@ -1,55 +1,43 @@
 /* eslint-disable react/prop-types */
 
-function Checkbox({form, setForm}) {
+function CheckBox({form, setForm}) {
+    const options = ["swimmming", "bathing", "chatting", "no time to waste"];
 
-  function handleChange(event) {
-    const inputValue = event.target.value
-    setForm({ ...form, [inputValue]: !form[inputValue] })
+   const handleChange = (event) => {
+  const value = event.target.value;
+
+  if (form.timeSpent.includes(value)) {
+    setForm(prevForm => ({
+      ...prevForm,
+      timeSpent: prevForm.timeSpent.filter(item => item !== value)
+    }));
+  } else {
+    setForm(prevForm => ({
+      ...prevForm,
+      timeSpent: [...prevForm.timeSpent, value]
+    }));
   }
-    return (
-<ul>
-                <li>
-                    <label
-                    ><input
-                        name="spend-time"
-                        type="checkbox"
-                        value="swimming"
-                        onChange={handleChange}
-                        checked={form.swimming}
-                    />Swimming</label>
-                </li>
-                <li>
-                    <label
-                    ><input 
-                    name="spend-time" 
-                    type="checkbox" 
-                    value="bathing"
-                    onChange={handleChange}
-                    checked={form.bathing} />Bathing</label>
-                </li>
-                <li>
-                    <label
-                    ><input
-                        name="spend-time"
-                        type="checkbox"
-                        value="chatting"
-                        onChange={handleChange}
-                        checked={form.chatting}
-                    />Chatting</label>
-                </li>
-                <li>
-                    <label
-                    ><input 
-                    name="spend-time" 
-                    type="checkbox" 
-                    value="noTime"
-                    onChange= {handleChange}
-                    checked={form.noTime} />I don`t like to
-                    spend time with it</label>
-                </li>
-                </ul>
+};
 
-    )
+
+    return (
+    <ul>
+      {options.map((option) => (
+        <li key={option}>
+          <label>
+            <input
+              name="spend-time"
+              type="checkbox"
+              value={option}
+              checked={form.timeSpent.includes(option)}
+              onChange={handleChange}
+            />
+            {option.charAt(0).toUpperCase() + option.slice(1)}
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
-export default Checkbox
+export default CheckBox;
